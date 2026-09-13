@@ -1,0 +1,57 @@
+@startuml
+title Sistema de Matrículas - Diagrama de Casos de Uso (Sprint 1)
+
+left to right direction
+!pragma layout smetana
+
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName SansSerif
+skinparam ArrowColor #374151
+skinparam ActorBorderColor #1F2937
+skinparam ActorFontColor #111827
+skinparam UsecaseBorderColor #1D4ED8
+skinparam UsecaseBackgroundColor #EFF6FF
+skinparam UsecaseFontColor #111827
+skinparam RectangleBorderColor #4B5563
+skinparam RectangleFontColor #111827
+
+actor Aluno as ALU
+actor Professor as PRO
+actor Secretaria as SEC
+actor "Sistema de Cobranças" as COB <<sistema externo>>
+
+rectangle "Sistema de Matrículas" {
+  usecase "UC01\nAutenticar usuário" as UC01
+
+  usecase "UC02\nGerar currículo\ndo semestre" as UC02
+  usecase "UC03\nManter informações\nde disciplinas" as UC03
+  usecase "UC04\nManter informações\nde professores" as UC04
+  usecase "UC05\nManter informações\nde alunos" as UC05
+
+  usecase "UC06\nRealizar matrícula\nno semestre" as UC06
+  usecase "UC07\nCancelar matrícula" as UC07
+  usecase "UC08\nProcessar encerramento\ndo período de matrículas" as UC08
+
+  usecase "UC09\nConsultar alunos matriculados\npor disciplina" as UC09
+  usecase "UC10\nNotificar Sistema\nde Cobranças" as UC10
+}
+
+ALU -- UC01
+ALU -- UC06
+ALU -- UC07
+
+PRO -- UC01
+PRO -- UC09
+
+SEC -- UC01
+SEC -- UC02
+SEC -- UC03
+SEC -- UC04
+SEC -- UC05
+SEC -- UC08
+
+UC06 ..> UC10 : <<include>>
+COB -- UC10
+
+@enduml

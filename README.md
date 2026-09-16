@@ -1,6 +1,6 @@
 # Sistema de Matrículas
 
-Entrega acadêmica da **Sprint 1 - Modelo de Análise** da disciplina Projeto de
+Entrega da **Sprint 1 - Modelo de Análise** da disciplina Projeto de
 Software (Laboratório 1, segundo semestre de 2026).
 
 ## Descrição do projeto
@@ -12,10 +12,6 @@ matrículas dentro do período permitido; professores consultam matriculados por
 disciplina; e o sistema notifica um Sistema de Cobranças após a inscrição do
 aluno no semestre.
 
-O enunciado `LABORATORIO_2_LAB_DESENVOLVIMENTO_DE_SOFTWARE.pdf` foi lido
-integralmente e é a fonte oficial desta modelagem. Decisões não expressas nele
-estão identificadas como **Premissas de modelagem**.
-
 ## Objetivo
 
 Entregar uma visão verificável do comportamento esperado do Sistema de
@@ -25,16 +21,13 @@ elementos.
 
 ## Sprint 1 - Modelo de Análise
 
-Esta sprint contém somente:
+Este documento contém:
 
 - requisitos funcionais, regras de negócio, restrições e premissas;
 - especificações dos casos de uso;
 - Diagrama de Casos de Uso em PlantUML e sua renderização;
 - Histórias de Usuário com critérios de aceitação;
 - matriz de rastreabilidade `RF -> UC -> US`.
-
-Não fazem parte desta entrega Java, diagrama de classes, classes, atributos,
-métodos, stubs, banco de dados, interface, persistência ou protótipo funcional.
 
 ## Atores
 
@@ -85,11 +78,6 @@ As especificações completas estão em
 
 - [Fonte PlantUML](docs/diagrama-casos-de-uso.puml)
 - [Imagem PNG](docs/diagrama-casos-de-uso.png)
-
-A única relação de inclusão é `UC06 <<include>> UC10`, pois a notificação é
-obrigatória após a matrícula bem-sucedida. Cancelamento é um objetivo próprio,
-e não uma extensão da matrícula. Não foram criadas relações `<<extend>>` ou
-generalizações sem necessidade semântica.
 
 ## Histórias de Usuário
 
@@ -259,6 +247,7 @@ A lista completa e as justificativas estão em
 
 ## Integrantes
 
-| Nome | Matrícula |
-|---|---|
-| _A preencher_ | _A preencher_ |
+- Bárbara Marcella Inácio da Silva
+- Lucas Gabriel de Oliveira Franco
+- Maria Clara Neri Stankunas
+- Yago Garzon Chaves

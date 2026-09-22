@@ -1,0 +1,161 @@
+@startuml
+title Sistema de Matrículas - Diagrama de Classes (Sprint 2)
+
+top to bottom direction
+!pragma layout smetana
+
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName SansSerif
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #374151
+skinparam ClassBorderColor #1D4ED8
+skinparam ClassBackgroundColor #EFF6FF
+skinparam ClassFontColor #111827
+skinparam InterfaceBorderColor #B45309
+skinparam InterfaceBackgroundColor #FFFBEB
+skinparam EnumBorderColor #047857
+skinparam EnumBackgroundColor #ECFDF5
+skinparam NoteBorderColor #6B7280
+skinparam NoteBackgroundColor #F9FAFB
+
+package "Acesso e usuários" {
+  abstract class Usuario {
+    - login: String
+    - senha: String
+    + validarSenha(senhaInformada: String): boolean
+  }
+
+  class Aluno
+  class Professor
+  class Secretaria
+
+  Usuario <|-- Aluno
+  Usuario <|-- Professor
+  Usuario <|-- Secretaria
+}
+
+package "Aplicação" {
+  class SistemaMatriculas <<control>> {
+    - sistemaCobrancas: SistemaCobrancas
+    + autenticar(login: String, senha: String): Usuario
+    + gerarCurriculo(identificadorSemestre: String, cursos: List<Curso>): CurriculoSemestral
+    + manterDisciplina(disciplina: Disciplina): void
+    + manterProfessor(professor: Professor): void
+    + manterAluno(aluno: Aluno): void
+    + realizarMatricula(aluno: Aluno, curriculo: CurriculoSemestral, primeirasOpcoes: List<OfertaDisciplina>, alternativas: List<OfertaDisciplina>): MatriculaSemestral
+    + cancelarMatricula(matricula: MatriculaDisciplina): void
+    + processarEncerramento(curriculo: CurriculoSemestral): void
+    + consultarAlunos(oferta: OfertaDisciplina): List<Aluno>
+  }
+
+  interface SistemaCobrancas <<sistema externo>> {
+    + notificarInscricao(matricula: MatriculaSemestral): void
+  }
+}
+
+package "Domínio acadêmico" {
+  class Curso {
+    - nome: String
+    - numeroCreditos: int
+  }
+
+  class Disciplina
+
+  class CurriculoSemestral {
+    - identificadorSemestre: String
+    + adicionarOferta(disciplina: Disciplina): OfertaDisciplina
+    + listarOfertas(): List<OfertaDisciplina>
+  }
+
+  class PeriodoMatricula {
+    - status: StatusPeriodo
+    + estaEmAndamento(): boolean
+  }
+
+  class OfertaDisciplina {
+    {static} - MINIMO_ALUNOS: int = 3
+    {static} - MAXIMO_ALUNOS: int = 60
+    - situacao: SituacaoOferta
+    - inscricoesAbertas: boolean
+    + quantidadeMatriculados(): int
+    + podeReceberMatricula(): boolean
+    + registrarMatricula(matricula: MatriculaDisciplina): void
+    + cancelarMatricula(matricula: MatriculaDisciplina): void
+    + processarResultado(): void
+  }
+
+  class MatriculaSemestral {
+    - confirmada: boolean
+    + adicionarDisciplina(oferta: OfertaDisciplina, tipo: TipoOpcao): MatriculaDisciplina
+    + validarLimites(): boolean
+    + confirmar(): void
+  }
+
+  class MatriculaDisciplina {
+    - tipoOpcao: TipoOpcao
+    - status: StatusMatricula
+    + cancelar(): void
+  }
+
+  enum StatusPeriodo {
+    EM_ANDAMENTO
+    ENCERRADO
+  }
+
+  enum SituacaoOferta {
+    PENDENTE
+    ATIVA
+    CANCELADA
+  }
+
+  enum TipoOpcao {
+    PRIMEIRA_OPCAO
+    ALTERNATIVA
+  }
+
+  enum StatusMatricula {
+    ATIVA
+    CANCELADA
+  }
+}
+
+SistemaMatriculas ..> Usuario : autentica
+SistemaMatriculas ..> SistemaCobrancas : notifica
+
+Curso "0..*" -- "1..*" Disciplina : é constituído por
+CurriculoSemestral "1" o-- "1..*" Curso : inclui
+CurriculoSemestral "0..*" --> "1" PeriodoMatricula : período
+CurriculoSemestral "1" *-- "1..*" OfertaDisciplina
+OfertaDisciplina "0..*" --> "1" Disciplina : refere-se a
+
+Aluno "1" -- "0..*" MatriculaSemestral
+MatriculaSemestral "0..*" --> "1" CurriculoSemestral
+MatriculaSemestral "1" *-- "0..6" MatriculaDisciplina
+MatriculaDisciplina "0..*" --> "1" OfertaDisciplina
+
+note bottom of OfertaDisciplina
+  Regras do enunciado:
+  - máximo de 60 alunos por oferta;
+  - ao final do período, 3 ou mais alunos tornam a oferta ativa;
+  - com menos de 3 alunos, a oferta é cancelada.
+end note
+
+note bottom of MatriculaSemestral
+  Regras do enunciado:
+  - até 4 disciplinas de primeira opção;
+  - até 2 disciplinas alternativas;
+  - matrícula e cancelamento somente durante o período.
+end note
+
+legend bottom
+  |= Premissa de modelagem |= Justificativa |
+  | **PM-DC01** | `identificadorSemestre` é o dado mínimo para distinguir currículos semestrais. |
+  | **PM-DC02** | `OfertaDisciplina` separa a disciplina cadastrada de sua ocorrência em um semestre. |
+  | **PM-DC03** | `MatriculaSemestral` agrupa as escolhas para permitir a notificação das disciplinas à cobrança. |
+  | **PM-DC04** | Não há associação Professor-Disciplina, pois esse vínculo não foi definido no enunciado. |
+  | **PM-DC05** | Aluno, Professor, Secretaria e Disciplina não recebem atributos próprios não especificados. |
+  | **PM-DC06** | Cada currículo referencia um período para verificar as operações; o calendário não foi detalhado. |
+endlegend
+
+@enduml

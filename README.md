@@ -1,7 +1,8 @@
 # Sistema de Matrículas
 
-Entrega da **Sprint 1 - Modelo de Análise** da disciplina Projeto de
-Software (Laboratório 1, segundo semestre de 2026).
+Entregas da **Sprint 1 - Modelo de Análise** e da **Sprint 2 - Projeto
+Estrutural** da disciplina Projeto de Software (Laboratório 1, segundo
+semestre de 2026).
 
 ## Descrição do projeto
 
@@ -14,10 +15,10 @@ aluno no semestre.
 
 ## Objetivo
 
-Entregar uma visão verificável do comportamento esperado do Sistema de
-Matrículas por meio de requisitos, regras de negócio, atores, casos de uso,
-Diagrama de Casos de Uso, Histórias de Usuário e rastreabilidade entre esses
-elementos.
+Entregar uma visão verificável do comportamento e da estrutura esperados do
+Sistema de Matrículas por meio de requisitos, regras de negócio, atores, casos
+de uso, Histórias de Usuário, modelos UML e um projeto Java alinhado ao
+Diagrama de Classes.
 
 ## Sprint 1 - Modelo de Análise
 
@@ -237,13 +238,62 @@ As especificações completas estão em
 A lista completa e as justificativas estão em
 [docs/requisitos.md](docs/requisitos.md#5-premissas-de-modelagem).
 
+## Sprint 2 - Projeto Estrutural
+
+A Sprint 2 acrescenta o Diagrama de Classes e o projeto Java contendo as
+classes, os atributos, as associações e os stubs dos métodos modelados. O
+código permanece deliberadamente sem implementação funcional: interface,
+persistência e protótipo pertencem à Sprint 3.
+
+### Diagrama de Classes
+
+![Diagrama de Classes do Sistema de Matrículas](docs/diagrama-classes.png)
+
+- [Fonte PlantUML](docs/diagrama-classes.puml)
+- [Imagem PNG](docs/diagrama-classes.png)
+
+As premissas necessárias ao projeto estrutural estão identificadas no próprio
+diagrama como `PM-DC01` a `PM-DC06`. Em especial, não foi criado vínculo entre
+Professor e Disciplina, pois essa associação não consta no enunciado.
+
+### Projeto Java
+
+O código-fonte está em `src/main/java` e foi organizado conforme os grupos do
+Diagrama de Classes:
+
+| Pacote | Classes e responsabilidades estruturais |
+|---|---|
+| `acesso` | `Usuario`, `Aluno`, `Professor` e `Secretaria`. |
+| `aplicacao` | `SistemaMatriculas`, com os stubs correspondentes aos casos de uso. |
+| `dominio.academico` | Currículo, curso, disciplina, oferta, período e respectivas enumerações. |
+| `dominio.matricula` | Matrícula semestral, escolha de disciplina e respectivas enumerações. |
+| `integracao` | Contrato `SistemaCobrancas` para o sistema externo. |
+
+Todos os métodos concretos modelados estão declarados como stubs e lançam
+`UnsupportedOperationException`. Isso evidencia que a assinatura existe sem
+antecipar a implementação da Sprint 3.
+
+> **Premissa técnica da implementação:** foi adotada a estrutura Maven com
+> Java 17 apenas para organizar e validar a compilação. O enunciado exige Java,
+> mas não determina versão nem ferramenta de construção.
+
+Para compilar o projeto em um ambiente com JDK 17 e Maven:
+
+```bash
+mvn clean compile
+```
+
 ## Estrutura do projeto
 
-- `README.md`: documento principal, Histórias de Usuário e visão geral da entrega;
+- `README.md`: documento principal e visão geral das Sprints 1 e 2;
+- `pom.xml`: configuração Maven para Java 17;
+- `src/main/java`: classes, atributos, associações e stubs do projeto estrutural;
 - `docs/requisitos.md`: RF, RN, restrições, premissas e rastreabilidade;
 - `docs/casos-de-uso.md`: atores e especificações completas de UC01-UC10;
 - `docs/diagrama-casos-de-uso.puml`: fonte PlantUML do diagrama;
-- `docs/diagrama-casos-de-uso.png`: diagrama renderizado.
+- `docs/diagrama-casos-de-uso.png`: Diagrama de Casos de Uso renderizado;
+- `docs/diagrama-classes.puml`: fonte PlantUML do Diagrama de Classes;
+- `docs/diagrama-classes.png`: Diagrama de Classes renderizado.
 
 ## Integrantes
 

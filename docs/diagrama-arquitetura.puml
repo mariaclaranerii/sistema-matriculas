@@ -1,0 +1,71 @@
+@startuml
+title Sistema de Matrículas - Arquitetura do Protótipo
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName SansSerif
+skinparam componentStyle rectangle
+skinparam ArrowColor #374151
+skinparam ComponentBorderColor #1D4ED8
+skinparam ComponentBackgroundColor #EFF6FF
+skinparam PackageBorderColor #6B7280
+skinparam PackageBackgroundColor white
+skinparam DatabaseBorderColor #BE123C
+skinparam DatabaseBackgroundColor #FFF1F2
+
+package "Interface" {
+  component Main
+  component InterfaceConsole
+}
+
+package "Aplicação" {
+  component SistemaMatriculas
+  component DadosIniciais
+}
+
+package "Domínio" {
+  component "Acesso e usuários" as Acesso
+  component "Domínio acadêmico" as Academico
+  component "Domínio de matrícula" as Matricula
+}
+
+package "Persistência" {
+  component EstadoSistema
+  component PersistenciaArquivo
+  database "sistema-matriculas.dat" as ArquivoEstado
+}
+
+package "Integração externa" {
+  interface SistemaCobrancas
+  component SistemaCobrancasArquivo
+  database "notificacoes-cobranca.txt" as ArquivoCobranca
+}
+
+Main --> InterfaceConsole : inicia
+
+InterfaceConsole --> SistemaMatriculas : executa casos de uso
+InterfaceConsole --> PersistenciaArquivo : solicita persistência
+DadosIniciais --> SistemaMatriculas : cria dados demonstrativos
+DadosIniciais --> EstadoSistema : popula
+
+SistemaMatriculas --> EstadoSistema : consulta e altera
+SistemaMatriculas --> Acesso
+SistemaMatriculas --> Academico
+SistemaMatriculas --> Matricula
+SistemaMatriculas --> SistemaCobrancas : notifica inscrição
+
+PersistenciaArquivo --> EstadoSistema : serializa
+PersistenciaArquivo --> ArquivoEstado : lê e grava
+SistemaCobrancasArquivo ..|> SistemaCobrancas
+SistemaCobrancasArquivo --> ArquivoCobranca : acrescenta registro
+
+note bottom of PersistenciaArquivo
+  Persistência local por serialização de objetos.
+end note
+
+note bottom of SistemaCobrancasArquivo
+  Adaptador demonstrável para o sistema externo.
+end note
+
+@enduml

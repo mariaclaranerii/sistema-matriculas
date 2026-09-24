@@ -8,4 +8,3 @@ import br.pucminas.sistemamatriculas.dominio.matricula.MatriculaSemestral;
 public interface SistemaCobrancas {
     void notificarInscricao(MatriculaSemestral matricula);
 }
-

@@ -1,8 +1,5 @@
 # Sistema de Matrículas
 
-Entregas da **Sprint 1 - Modelo de Análise** e da **Sprint 2 - Projeto
-Estrutural** da disciplina Projeto de Software (Laboratório 1, segundo
-semestre de 2026).
 
 ## Descrição do projeto
 
@@ -20,7 +17,7 @@ Sistema de Matrículas por meio de requisitos, regras de negócio, atores, casos
 de uso, Histórias de Usuário, modelos UML e um projeto Java alinhado ao
 Diagrama de Classes.
 
-## Sprint 1 - Modelo de Análise
+## Modelo de Análise
 
 Este documento contém:
 
@@ -238,12 +235,7 @@ As especificações completas estão em
 A lista completa e as justificativas estão em
 [docs/requisitos.md](docs/requisitos.md#5-premissas-de-modelagem).
 
-## Sprint 2 - Projeto Estrutural
-
-A Sprint 2 acrescenta o Diagrama de Classes e o projeto Java contendo as
-classes, os atributos, as associações e os stubs dos métodos modelados. O
-código permanece deliberadamente sem implementação funcional: interface,
-persistência e protótipo pertencem à Sprint 3.
+## Projeto Estrutural
 
 ### Diagrama de Classes
 

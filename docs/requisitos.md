@@ -1,11 +1,9 @@
-# Requisitos - Sprint 1
+# Requisitos
 
 ## 1. Fonte e escopo
 
 Este documento consolida o Modelo de Análise do Sistema de Matrículas. A única
-fonte de requisitos é o enunciado `LABORATORIO_2_LAB_DESENVOLVIMENTO_DE_SOFTWARE.pdf`,
-lido integralmente. O escopo desta entrega é exclusivamente a Sprint 1
-(`Lab01S01`): Diagrama de Casos de Uso e Histórias de Usuário em Markdown.
+fonte de requisitos é o enunciado `LABORATORIO_2_LAB_DESENVOLVIMENTO_DE_SOFTWARE.pdf`.
 
 Os termos **deve** e **devem** indicam comportamento obrigatório. Informações
 necessárias à modelagem, mas não definidas pelo enunciado, estão explicitadas na
